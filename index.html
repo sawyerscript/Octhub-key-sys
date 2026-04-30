@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Octhub key sys</title>
+    <style>
+        /* Exact Color Specification */
+        :root {
+            --bg-color: rgb(15, 15, 18);
+            --btn-color: rgb(38, 38, 48);
+            --text-main: #ffffff;
+            --text-secondary: #8a8a98;
+            --border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .key-box {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 12px;
+            font-family: "SF Mono", "Consolas", monospace;
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+            text-overflow: ellipsis;
+        }
+
+        .copy-btn {
+            background-color: var(--btn-color);
+            color: var(--text-main);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: transform 0.1s active, background 0.2s;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            filter: brightness(1.2);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--btn-color);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="content" class="container hidden">
+        <h1>Octhub key sys</h1>
+        <div class="key-box">
+            <input type="text" id="key-input" readonly value="X9#v2!PzQ&8m*L_u5nR^kTW4@bY7&@#$@-3874290232487238">
+            <button class="copy-btn" onclick="handleCopy()">Copy</button>
+        </div>
+    </div>
+
+    <div id="toast">Copied to clipboard</div>
+
+    <script>
+        // Anti-Bypasser Logic
+        window.onload = () => {
+            const isBypasser = () => {
+                const ua = navigator.userAgent.toLowerCase();
+                // Common bypasser/bot identifiers
+                const botPattern = /zen|headless|puppeteer|selenium|crawler|spider/i;
+                return botPattern.test(ua) || navigator.webdriver;
+            };
+
+            if (isBypasser()) {
+                document.body.innerHTML = ""; // Complete blank for bypassers
+                return;
+            }
+
+            // Reveal UI for normal users
+            document.getElementById('content').classList.remove('hidden');
+        };
+
+        function handleCopy() {
+            const input = document.getElementById('key-input');
+            const toast = document.getElementById('toast');
+            
+            input.select();
+            input.setSelectionRange(0, 99999); // Mobile compatibility
+
+            try {
+                document.execCommand('copy');
+                toast.style.opacity = "1";
+                setTimeout(() => { toast.style.opacity = "0"; }, 2000);
+            } catch (err) {
+                console.error('Unable to copy');
+            }
+        }
+    </script>
+</body>
+</html>
